@@ -3,6 +3,7 @@
 				PROYECTO
 -----------------------------------------------------------------------------
 
+
 Flujo de trabajo: 
 Hemos basado la planificación de las ramas en GitFlow.
 	 - Rama main: versión abreviada del proyecto, historial de publicación oficial (control de versiones).
