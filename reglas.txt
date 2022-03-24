@@ -1,0 +1,22 @@
+
+-----------------------------------------------------------------------------
+				PROYECTO
+-----------------------------------------------------------------------------
+
+Flujo de trabajo: 
+
+Hemos basado la planificación de las ramas en GitFlow.
+	 - Rama main: versión abreviada del proyecto, historial de publicación oficial (control de versiones).
+	 - Rama develop: rama de integración para las funciones.
+	 - Rama desarrollador: cada desarrollador crea su rama de trabajo, pudiendo ramificarla según sus necesidades.
+	 
+Commits:
+
+Tecnologías:
+	- Python (back-end)
+		> SQLite (base de datos)
+		> DB Browser (gestor BBDD)
+		> Flask (aplicación web)
+	- Angular (front-end)
+	
+Base de datos:
