@@ -17,9 +17,7 @@ def leer_json(archivo):
 
 
 datos = leer_json('patrimonio.json')
-DATABASE = 'database.db'
-
-con = sqlite3.connect(DATABASE)
+con = sqlite3.connect('database.db')
 cur = con.cursor()
 
 cur.execute('''
@@ -82,7 +80,6 @@ for reg in datos:
     cur.execute('''
     INSERT INTO edificio VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', valores)
-    
 
 con.commit()
 con.close()

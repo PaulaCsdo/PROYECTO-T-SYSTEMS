@@ -89,3 +89,44 @@ def eliminar_arquitecto(arquitecto):
 
     return redirect(url_for('index'))
 
+
+app.route('/buscar/<denominacion>')
+def buscar(denominacion):
+    '''Esta función permite realizar la búsqueda de un registro
+    mediante el nombre del proyecto'''
+
+    atributos_edificio = [
+        'id',
+        'denominacion',
+        'otrasDenominaciones',
+        'categorias',
+        'tipologia',
+        'centro',
+        'ubicacionActual',
+        'acceso',
+        'formaDeIngreso',
+        'procedencia',
+        'volumen',
+        'cronologia',
+        'autores',
+        'descripcion',
+        'historia',
+        'objetoDocumento',
+        'tecnicas',
+        'signatura',
+        'exposicion',
+        'thumbnail'
+    ]
+
+    parametros = (denominacion,)
+    sql = '''SELECT * FROM edificio WHERE denominacion LIKE '%?%' '''
+    
+    try:
+        cur.execute(sql, parametros)
+    except:
+        return 'No se ha podido realizar la búsqueda'
+
+    busqueda = mapear_registros(atributos_edificio, cur)
+    con.commit()
+
+    return Response(json.JSONEncoder().encode(busqueda), mimetype='application/json')
