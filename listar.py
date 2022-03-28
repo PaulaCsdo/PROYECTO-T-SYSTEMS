@@ -1,9 +1,9 @@
-from flask import Flask, Response
+from flask import *
 import sqlite3
 import json
 
 database = 'database.db'
-con = sqlite3.connect('database.db')
+con = sqlite3.connect('database.db', check_same_thread=False)
 cur = con.cursor()
 app = Flask(__name__)
 
@@ -26,7 +26,7 @@ def mapear_registros(atributos_tabla, cursor):
 def index():
     atributos_arquitecto = [
         'arquitecto',
-        'num_colegiado'
+        'num_colegio'
     ]
 
     atributos_edificio = [

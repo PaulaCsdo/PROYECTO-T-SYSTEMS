@@ -27,7 +27,8 @@ cur.execute('''
         arquitecto text,
         num_colegio integer,
 
-        primary key(arquitecto)
+        primary key(arquitecto),
+        unique(num_colegio)
     );
 ''')
 
