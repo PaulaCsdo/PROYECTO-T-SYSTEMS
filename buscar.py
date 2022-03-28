@@ -1,39 +1,62 @@
-from flask import Flask, request, Response
+from flask import *
 import json
 import sqlite3
 
-con = sqlite3.connect('database.db')
+con = sqlite3.connect('database.db', check_same_thread=False)
 cur = con.cursor()
 app = Flask(__name__)
 
-
-#Mapear registros
 def mapear_registros(atributos_tabla, cursor):
-    for fila in cursor:
-        registros={}
-        i=0
-        while i<len(fila):
-            registro[atributos_tabla[i]]=fila[i]
-            i +=1
-
-        registros.append (registro)
-        
-    return registros
+    registros = []
     
-#Buscador por nombre del proyecto/edificio
-@app.route('/buscar/<denominacion>', methods='POST')
+    for fila in cursor:
+        registro = {}
+        i = 0
+        while i < len(fila):
+            registro[atributos_tabla[i]] = fila[i]
+            i += 1
+
+        registros.append(registro)
+
+    return registros
+
+@app.route('/buscar/<denominacion>')
 def buscar(denominacion):
     '''Esta función permite realizar la búsqueda de un registro
     mediante el nombre del proyecto'''
 
-    denominacion = request.form.get('denominacion')
-    
-    cur.execute('''SELECT * FROM edificio WHERE denominacion LIKE '%{}%' '''.format(denominacion))
-    busqueda = mapear_registros(denominacion, cur)
+    atributos_edificio = [
+        'id',
+        'denominacion',
+        'otrasDenominaciones',
+        'categorias',
+        'tipologia',
+        'centro',
+        'ubicacionActual',
+        'acceso',
+        'formaDeIngreso',
+        'procedencia',
+        'volumen',
+        'cronologia',
+        'autores',
+        'descripcion',
+        'historia',
+        'objetoDocumento',
+        'tecnicas',
+        'signatura',
+        'exposicion',
+        'thumbnail'
+    ]
 
+    parametros = (denominacion,)
+    sql = '''SELECT * FROM edificio WHERE denominacion LIKE '%?%' '''
+    
+    try:
+        cur.execute(sql, parametros)
+    except:
+        return 'No se ha podido realizar la búsqueda'
+
+    busqueda = mapear_registros(atributos_edificio, cur)
     con.commit()
-    con.close()
 
-    return Response(json.JSONEncoder().encode(busqueda), mimetype('application/json') 
-
-    
+    return Response(json.JSONEncoder().encode(busqueda), mimetype='application/json')
