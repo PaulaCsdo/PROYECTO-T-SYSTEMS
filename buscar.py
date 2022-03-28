@@ -1,8 +1,7 @@
 from flask import Flask, request, Response
-import jason
+import json
 import sqlite3
 
-database = 'database.db'
 con = sqlite3.connect('database.db')
 cur = con.cursor()
 app = Flask(__name__)
@@ -32,7 +31,9 @@ def buscar(denominacion):
     cur.execute('''SELECT * FROM edificio WHERE denominacion LIKE '%{}%' '''.format(denominacion))
     busqueda = mapear_registros(denominacion, cur)
 
-    return Response(json.JSONEncoder().encode(busqueda), mimetype('application/json') 
-
     con.commit()
     con.close()
+
+    return Response(json.JSONEncoder().encode(busqueda), mimetype('application/json') 
+
+    
