@@ -9,7 +9,6 @@ import sqlite3
 ##
 ##datos = json.loads(descargar_json('http://datos.unican.es/patrimonio/108/Patrimonio_arquitectonico.json'))
 
-
 def leer_json(archivo):
     f = open(archivo, encoding='utf-8')
     data = json.load(f)
@@ -18,9 +17,7 @@ def leer_json(archivo):
 
 
 datos = leer_json('patrimonio.json')
-DATABASE = 'database.db'
-
-con = sqlite3.connect(DATABASE)
+con = sqlite3.connect('database.db')
 cur = con.cursor()
 
 cur.execute('''
@@ -62,8 +59,8 @@ CREATE TABLE edificio (
 ''')
 
 i = 101
-arquitectos = []
 
+arquitectos = []
 for reg in datos:
     if reg['Autores'] not in arquitectos:
         arquitectos.append(reg['Autores'])
@@ -83,7 +80,6 @@ for reg in datos:
     cur.execute('''
     INSERT INTO edificio VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', valores)
-    
 
 con.commit()
 con.close()
